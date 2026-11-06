@@ -1,4 +1,4 @@
-# atari-kit-starter
+# aceit-kit-starter
 
 A design-system-agnostic HTML prototype scaffold built on **Eleventy v3**, **Tailwind CSS v4**, and **vanilla JavaScript**.
 
@@ -152,3 +152,7 @@ To sync to your global skills (recommended):
 mkdir -p ~/.agents/skills
 cp -r .agents/skills/* ~/.agents/skills/
 ```
+
+## License
+
+The code in this repository is released under the [MIT License](LICENSE). Fonts and libraries loaded from CDNs keep their own licenses, and your own content and the sites you build from this template are yours.

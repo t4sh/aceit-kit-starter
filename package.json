@@ -1,6 +1,7 @@
 {
   "name": "{{project-name}}",
   "version": "0.1.0",
+  "license": "MIT",
   "description": "{{PROJECT_NAME}} — HTML prototype with 11ty, Tailwind v4, and design-system-agnostic tokens",
   "private": true,
   "engines": {
