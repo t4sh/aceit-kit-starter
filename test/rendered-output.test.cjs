@@ -17,7 +17,7 @@ test('Eleventy render preserves page-level section overrides', () => {
   const about = readFileSync('out/about/index.html', 'utf8');
   assert.match(about, /Ready to build\?/);
   assert.match(about, /Start adding pages and sections to bring your prototype to life\./);
-  assert.doesNotMatch(about, /Ready to get started\?/);
+  assert.doesNotMatch(about, /Start your own prototype/);
   assert.doesNotMatch(about, /undefined/);
 });
 
@@ -25,8 +25,10 @@ test('Eleventy render keeps default section content on the homepage', () => {
   run('npm', ['run', 'build']);
 
   const home = readFileSync('out/index.html', 'utf8');
-  assert.match(home, /Build something remarkable/);
-  assert.match(home, /Ready to get started\?/);
+  assert.match(home, /Build and share HTML prototypes/);
+  assert.match(home, /Start your own prototype/);
+  assert.match(home, /href="https:\/\/github\.com\/t4sh\/aceit-kit-starter\/generate"/);
+  assert.doesNotMatch(home, /\{\{PROJECT_NAME\}\}/);
   assert.doesNotMatch(home, /undefined/);
 });
 
@@ -41,7 +43,7 @@ test('Eleventy prefixes internal URLs for GitHub Pages project sites', () => {
   const about = readFileSync('out/about/index.html', 'utf8');
   assert.match(home, /href="\/atari-kit-starter\/assets\/css\/tokens\.css\?v=[^"]+"/);
   assert.ok(
-    (home.match(/href="\/atari-kit-starter\/about\/"/g) || []).length >= 4,
+    (home.match(/href="\/atari-kit-starter\/about\/"/g) || []).length >= 3,
     'navigation, footer, and button macros should prefix internal links'
   );
   assert.match(about, /src="\/atari-kit-starter\/assets\/js\/theme-toggle\.js\?v=[^"]+"/);

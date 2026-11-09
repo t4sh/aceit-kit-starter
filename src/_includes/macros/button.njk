@@ -12,7 +12,7 @@
     variant  — primary (default), secondary, outline, ghost, destructive
     size     — xs, sm, (default), lg, icon
     href     — if set, renders <a> instead of <button>
-    icon     — Lucide icon name (renders before label)
+    icon     — Name from src/_lib/icons.js (renders before label)
     iconOnly — if true, uses icon size and hides label visually
     attrs    — extra HTML attributes as a key/value object,
                e.g. { "aria-controls": "menu" }. Values are escaped via
@@ -35,7 +35,7 @@
   {%- set variant = opts.variant or "primary" -%}
   {%- set size = opts.size or "" -%}
   {%- set href = opts.href or "" -%}
-  {%- set icon = opts.icon or "" -%}
+  {%- set iconName = opts.icon or "" -%}
   {%- set iconOnly = opts.iconOnly or false -%}
 
   {%- set classes = "btn btn--" + variant -%}
@@ -48,7 +48,7 @@
       class="{{ classes }}"
       {{- _attrs(opts.attrs) | safe -}}
     >
-      {%- if icon %}<i data-lucide="{{ icon }}" style="width:1em;height:1em;"></i>{% endif -%}
+      {%- if iconName %}{% icon iconName %}{% endif -%}
       {%- if not iconOnly %}
         {{ label }}
       {% else %}
@@ -57,7 +57,7 @@
     </a>
   {%- else -%}
     <button class="{{ classes }}" {{- _attrs(opts.attrs) | safe -}}>
-      {%- if icon %}<i data-lucide="{{ icon }}" style="width:1em;height:1em;"></i>{% endif -%}
+      {%- if iconName %}{% icon iconName %}{% endif -%}
       {%- if not iconOnly %}
         {{ label }}
       {% else %}

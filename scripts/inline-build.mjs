@@ -15,7 +15,7 @@
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from 'fs';
 import { join, dirname, resolve, relative, extname } from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import { gzipSync } from 'zlib';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -24,6 +24,7 @@ const OUT_DIR = join(ROOT, 'out');
 const SRC_DIR = join(ROOT, 'src');
 const STANDALONE_DIR = join(ROOT, 'out-standalone');
 const SPA_DIR = join(ROOT, 'out-spa');
+const FIELDNOTES_DOWNLOAD = 'assets/downloads/fieldnotes';
 const SPA_MODE = process.argv.includes('--spa');
 const SKIP_FRESHNESS = process.argv.includes('--no-freshness-check');
 
@@ -212,14 +213,14 @@ function copyDirSync(src, dest) {
 
 // -- Inline CSS/JS/Images ---------------------------------------------------
 
-function resolveAssetPath(value, htmlDir) {
+function resolveAssetPath(value, htmlDir, outputDir = OUT_DIR) {
   const clean = value.split('?')[0].split('#')[0];
   const assetIndex = clean.indexOf('/assets/');
-  if (assetIndex !== -1) return join(OUT_DIR, clean.slice(assetIndex + 1));
-  return clean.startsWith('/') ? join(OUT_DIR, clean) : join(htmlDir, clean);
+  if (assetIndex !== -1) return join(outputDir, clean.slice(assetIndex + 1));
+  return clean.startsWith('/') ? join(outputDir, clean) : join(htmlDir, clean);
 }
 
-function inlineCSS(html, htmlDir) {
+function inlineCSS(html, htmlDir, outputDir) {
   // Match any <link ...> tag, then pick out rel/href from the attrs so the
   // order doesn't matter (<link rel=".." href=".."> vs <link href=".." rel="..">).
   return html.replace(/<link\s+([^>]*?)\/?>/gi, (match, attrs) => {
@@ -228,7 +229,7 @@ function inlineCSS(html, htmlDir) {
     if (!hrefMatch) return match;
     const href = hrefMatch[1];
     if (href.startsWith('http://') || href.startsWith('https://')) return match;
-    const cssPath = resolveAssetPath(href, htmlDir);
+    const cssPath = resolveAssetPath(href, htmlDir, outputDir);
     const css = readFileOrEmpty(cssPath);
     if (!css) {
       console.warn(`  [inline] missing CSS: ${href} (kept as external <link>)`);
@@ -298,6 +299,18 @@ function processFile(filePath) {
   html = inlineJS(html, htmlDir);
   html = inlineImages(html, htmlDir);
   return html;
+}
+
+export function writeFieldnotesDownload(outputDir, filePath) {
+  const html = inlineCSS(disk.readText(filePath), dirname(filePath), outputDir);
+  if (/<link\b[^>]*rel=["']stylesheet["']/i.test(html)) {
+    throw new Error('Fieldnotes download still references an external stylesheet.');
+  }
+  const download = join(outputDir, FIELDNOTES_DOWNLOAD);
+  ensureDir(dirname(download));
+  // The download attribute supplies the .html filename. Keep this payload out
+  // of the page walks used for SPA routes, canonical checks, and share cards.
+  disk.writeText(download, html);
 }
 
 // -- Standalone build -------------------------------------------------------
@@ -421,6 +434,7 @@ function buildSPA() {
 
   const shellBeforeHash = convertLinksToHash(shellBefore);
   const shellAfterHash = convertLinksToHash(shellAfter);
+  const fieldnotesDownload = fileToBase64DataUri(join(OUT_DIR, FIELDNOTES_DOWNLOAD));
 
   // Build the SPA HTML
   let spaHTML = `<!DOCTYPE html>
@@ -450,6 +464,7 @@ ${shellAfterHash}
   'use strict';
 
   var lifecycle = window.PageLifecycle;
+  var fieldnotesFile = ${JSON.stringify(fieldnotesDownload)};
   var templates = document.querySelectorAll('template[data-route]');
   var routeMap = {};
   templates.forEach(function (t) {
@@ -469,7 +484,8 @@ ${shellAfterHash}
   }
 
   function navigate() {
-    var hash = window.location.hash.slice(1) || '/';
+    var parts = window.location.hash.slice(1).split('#', 2);
+    var hash = parts[0] || '/';
     var tpl = routeMap[hash] || routeMap['/'];
 
     if (!tpl) return;
@@ -480,14 +496,10 @@ ${shellAfterHash}
     main.innerHTML = sanitize(tpl.innerHTML);
 
     document.title = tpl.getAttribute('data-title') || '{{project-name}}';
-    window.scrollTo(0, 0);
-
     dispatchPageLoaded(hash);
-
-    // Re-init Lucide icons
-    if (typeof lucide !== 'undefined' && lucide.createIcons) {
-      lucide.createIcons();
-    }
+    var target = parts[1] && document.getElementById(parts[1]);
+    if (target) target.scrollIntoView();
+    else window.scrollTo(0, 0);
   }
 
   window.addEventListener('hashchange', navigate);
@@ -497,6 +509,16 @@ ${shellAfterHash}
     var link = e.target.closest('a[href]');
     if (!link) return;
     var href = link.getAttribute('href');
+    if (fieldnotesFile && href === '/${FIELDNOTES_DOWNLOAD}' && link.hasAttribute('download')) {
+      link.href = fieldnotesFile;
+      return;
+    }
+    var target = href && href.startsWith('#') && document.getElementById(href.slice(1));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView();
+      return;
+    }
     if (href && href.startsWith('/') && !href.startsWith('//')) {
       e.preventDefault();
       window.location.hash = href;
@@ -523,8 +545,7 @@ ${shellAfterHash}
 
 // -- Run --------------------------------------------------------------------
 
-if (SPA_MODE) {
-  buildSPA();
-} else {
-  buildStandalone();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  if (SPA_MODE) buildSPA();
+  else buildStandalone();
 }

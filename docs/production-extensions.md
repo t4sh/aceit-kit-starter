@@ -154,3 +154,15 @@ Do not copy product-specific production details into this starter:
 - Large API rewrite logic inside Eleventy config unless the starter-derived project needs it
 
 The goal is to keep this scaffold teachable, portable, and safe while documenting the path to production maturity.
+
+## Starter references
+
+The [section library](https://t4sh.github.io/aceit-kit-starter/sections/) shows how to compose a page and where to edit its data. [Fieldnotes](https://t4sh.github.io/aceit-kit-starter/examples/fieldnotes/) applies Paper and Ink to the same sections and has a single-file HTML download.
+
+| Reference                                                                                                   | Idea used in Aceit Kit                                                                                 |
+| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [Grease](https://web-grease.netlify.app/) and [ZeroPoint](https://getzeropoint.com/block-library/)          | Show live sections and identify their source files, then make the template creation link easy to find. |
+| [Eleventy Excellent](https://eleventy-excellent.netlify.app/) and [Elva](https://elva.scott.ee/)            | Give the working example its own type, palette, and recognizable illustration.                         |
+| [11ty Landing Page](https://ttntm.github.io/11ty-landing-page/)                                             | Show a full page composed from reusable sections.                                                      |
+| [Eleventy Base Blog](https://demo-base-blog.11ty.dev/) and [One Starter](https://starter.buildawesome.one/) | Put the first edit and a short project tree alongside the setup commands.                              |
+| [Kohrongying's blog starter](https://github.com/kohrongying/11ty-blog-starter)                              | Keep content visible when JavaScript is disabled.                                                      |

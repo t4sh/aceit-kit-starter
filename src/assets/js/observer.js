@@ -72,6 +72,10 @@
     const start = performance.now();
 
     function tick(now) {
+      if (prefersReducedMotion) {
+        el.textContent = target.toLocaleString();
+        return;
+      }
       const progress = Math.min((now - start) / duration, 1);
       // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
@@ -82,36 +86,42 @@
     requestAnimationFrame(tick);
   }
 
+  function applyEffects(el) {
+    const types = (el.getAttribute('data-observe') || '').split(/\s+/);
+    el.classList.remove('observe-pending');
+    types.forEach(function (type) {
+      if (effects[type]) effects[type](el);
+    });
+  }
+
+  function finish(el) {
+    applyEffects(el);
+    observer.unobserve(el);
+    observed.delete(el);
+  }
+
   // -- Reveal all (for reduced motion) --------------------------------------
   function revealAll() {
-    observed.forEach(function (el) {
-      const types = (el.getAttribute('data-observe') || '').split(/\s+/);
-      types.forEach(function (type) {
-        if (effects[type]) effects[type](el);
-      });
-    });
+    observed.forEach(finish);
   }
 
   // -- Observer callback ----------------------------------------------------
   function handleIntersect(entries) {
     entries.forEach(function (entry) {
-      if (!entry.isIntersecting) return;
+      if (!entry.isIntersecting || !observed.has(entry.target)) return;
 
-      const el = entry.target;
-      const types = (el.getAttribute('data-observe') || '').split(/\s+/);
-
-      types.forEach(function (type) {
-        if (effects[type]) effects[type](el);
-      });
-
-      // Unobserve after triggering (one-shot)
-      observer.unobserve(el);
-      observed.delete(el);
+      finish(entry.target);
     });
   }
 
   // -- Init / scan ----------------------------------------------------------
   function scan() {
+    const elements = document.querySelectorAll('[data-observe]');
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      elements.forEach(applyEffects);
+      return;
+    }
+
     if (!observer) {
       observer = new IntersectionObserver(handleIntersect, {
         rootMargin: '0px 0px -60px 0px',
@@ -119,21 +129,17 @@
       });
     }
 
-    const elements = document.querySelectorAll('[data-observe]');
     elements.forEach(function (el) {
       if (observed.has(el)) return;
-
-      // Reduced motion: resolve immediately
-      if (prefersReducedMotion) {
-        const types = (el.getAttribute('data-observe') || '').split(/\s+/);
-        types.forEach(function (type) {
-          if (effects[type]) effects[type](el);
-        });
-        return;
-      }
-
       observed.add(el);
       observer.observe(el);
+      // Visible content stays visible at startup. Only defer offscreen reveals.
+      if (
+        el.matches('[data-observe~="reveal"], [data-observe~="reveal-up"]') &&
+        el.getBoundingClientRect().top > window.innerHeight
+      ) {
+        el.classList.add('observe-pending');
+      }
     });
   }
 
@@ -141,6 +147,7 @@
   function cleanup() {
     if (observer) {
       observer.disconnect();
+      observed.forEach((el) => el.classList.remove('observe-pending'));
       observed.clear();
     }
   }

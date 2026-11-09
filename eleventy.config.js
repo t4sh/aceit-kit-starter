@@ -1,6 +1,7 @@
 const markdownIt = require('markdown-it');
 const site = require('./src/_data/site.js');
 const pageIdentity = require('./src/_lib/page-identity.js');
+const { icon, faviconDataUrl } = require('./src/_lib/icons.js');
 const { safeAttrName, safeUrl } = require('./scripts/template-safety.cjs');
 
 function sitePath(value) {
@@ -30,6 +31,15 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ 'src/assets/css': 'assets/css' });
   eleventyConfig.addPassthroughCopy({ 'src/assets/js': 'assets/js' });
   eleventyConfig.addPassthroughCopy({ 'src/assets/images': 'assets/images' });
+  eleventyConfig.addPassthroughCopy({
+    'node_modules/@hugeicons/core-free-icons/LICENSE.md': 'assets/licenses/hugeicons-MIT.txt',
+  });
+  eleventyConfig.on('eleventy.after', async ({ directories, results }) => {
+    const example = results.find(({ url }) => url === '/examples/fieldnotes/');
+    if (!example) return;
+    const { writeFieldnotesDownload } = await import('./scripts/inline-build.mjs');
+    writeFieldnotesDownload(directories.output, example.outputPath);
+  });
 
   // -- Filters ---------------------------------------------------------------
 
@@ -128,6 +138,8 @@ module.exports = function (eleventyConfig) {
 
   // Current year
   eleventyConfig.addShortcode('year', () => `${new Date().getFullYear()}`);
+  eleventyConfig.addShortcode('icon', icon);
+  eleventyConfig.addShortcode('faviconDataUrl', faviconDataUrl);
 
   // -- Watch targets ---------------------------------------------------------
   eleventyConfig.addWatchTarget('src/assets/');

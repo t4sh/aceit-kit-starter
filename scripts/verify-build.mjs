@@ -5,12 +5,20 @@ const outputRoot = path.resolve(process.env.ELEVENTY_OUTPUT_DIR || 'out');
 const prefix = (process.env.ELEVENTY_PATH_PREFIX || '').replace(/^\/+|\/+$/g, '');
 const baseUrl = String(process.env.SITE_BASE_URL || '').replace(/\/+$/, '');
 const indexable = process.env.SITE_INDEXABLE === 'true';
-const required = ['index.html', 'about/index.html', '404.html', 'robots.txt', 'sitemap.xml'];
-const failures = [];
 const canonicalRoutes = new Map([
   ['index.html', '/'],
-  ['about/index.html', '/about'],
+  ['about/index.html', '/about/'],
+  ['sections/index.html', '/sections/'],
+  ['examples/fieldnotes/index.html', '/examples/fieldnotes/'],
 ]);
+const required = [
+  ...canonicalRoutes.keys(),
+  '404.html',
+  'robots.txt',
+  'sitemap.xml',
+  'assets/downloads/fieldnotes',
+];
+const failures = [];
 
 for (const file of required) {
   if (!fs.existsSync(path.join(outputRoot, file))) failures.push(`missing output: ${file}`);

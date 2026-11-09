@@ -1,0 +1,15 @@
+<section class="section" id="{{ sectionConfig.id }}">
+  <div class="container">
+    <h2>{{ sectionConfig.title }}</h2>
+    <p>{{ sectionConfig.description }}</p>
+    <ol class="feature-rows">
+      {% for item in sectionConfig.items %}
+        <li>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+          <span class="feature-detail">{{ item.detail }}</span>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>

@@ -118,3 +118,34 @@ html.dark {
   --shadow-4: 0 6px 10px 4px oklch(0 0 0 / 0.3), 0 2px 3px oklch(0 0 0 / 0.3);
   --shadow-5: 0 8px 12px 6px oklch(0 0 0 / 0.3), 0 4px 4px oklch(0 0 0 / 0.3);
 }
+
+/* Fieldnotes maps both treatments onto the same component roles. */
+.fieldnotes,
+.starter-showcase {
+  --surface: oklch(0.97 0.028 92);
+  --surface-container: oklch(0.91 0.038 90);
+  --on-surface: oklch(0.28 0.041 152);
+  --on-surface-variant: oklch(0.39 0.037 151);
+  --primary: oklch(0.38 0.071 153);
+  --on-primary: oklch(0.98 0.02 92);
+  --primary-container: oklch(0.88 0.059 142);
+  --outline: oklch(0.49 0.045 148);
+  --outline-variant: oklch(0.76 0.05 119);
+  --map-accent: oklch(0.51 0.151 43);
+  --font-heading: Georgia, ui-serif, serif;
+}
+
+.fieldnotes:has(#style-ink:checked) {
+  color-scheme: dark;
+  --surface: oklch(0.23 0.04 250);
+  --surface-container: oklch(0.3 0.051 247);
+  --on-surface: oklch(0.95 0.026 232);
+  --on-surface-variant: oklch(0.81 0.037 235);
+  --primary: oklch(0.84 0.109 174);
+  --on-primary: oklch(0.23 0.043 245);
+  --primary-container: oklch(0.36 0.048 237);
+  --outline: oklch(0.69 0.07 224);
+  --outline-variant: oklch(0.43 0.066 233);
+  --map-accent: oklch(0.83 0.127 78);
+  --font-heading: ui-sans-serif, sans-serif;
+}

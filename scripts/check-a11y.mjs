@@ -3,7 +3,7 @@ import { AxeBuilder } from '@axe-core/playwright';
 import { chromium } from 'playwright';
 import { startStaticServer } from './lib/static-server.mjs';
 
-const routes = ['/', '/about/', '/404.html'];
+const routes = ['/', '/about/', '/sections/', '/examples/fieldnotes/', '/404.html'];
 const scenarios = [
   { name: 'desktop', viewport: { width: 1280, height: 800 }, reducedMotion: 'no-preference' },
   { name: 'mobile', viewport: { width: 390, height: 844 }, reducedMotion: 'no-preference' },
@@ -27,6 +27,15 @@ try {
         0,
         `${scenario.name} ${route}: ${results.violations.map((item) => item.id).join(', ')}`
       );
+      if (route === '/examples/fieldnotes/') {
+        await page.getByRole('radio', { name: 'Ink' }).check();
+        const ink = await new AxeBuilder({ page }).analyze();
+        assert.equal(
+          ink.violations.length,
+          0,
+          `${scenario.name} Fieldnotes Ink: ${ink.violations.map((item) => item.id).join(', ')}`
+        );
+      }
     }
     await context.close();
   }

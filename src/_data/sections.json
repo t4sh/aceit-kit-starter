@@ -1,18 +1,23 @@
 {
   "hero": {
     "variant": "01",
-    "title": "Build something remarkable",
-    "subtitle": "A design-system-agnostic prototype built with Eleventy, Tailwind v4, and vanilla JavaScript.",
+    "title": "Build and share HTML prototypes",
+    "subtitle": "Compose pages with reusable Nunjucks sections, style them with Tailwind CSS v4, and hand off an HTML file anyone can open.",
     "actions": [
-      { "label": "Get Started", "variant": "primary", "size": "lg", "href": "#" },
-      { "label": "Learn More", "variant": "outline", "size": "lg", "href": "/about/" }
+      {
+        "label": "Open the example",
+        "variant": "primary",
+        "size": "lg",
+        "href": "/examples/fieldnotes/"
+      },
+      { "label": "Browse sections", "variant": "outline", "size": "lg", "href": "/sections/" }
     ]
   },
   "cta": {
     "variant": "01",
-    "title": "Ready to get started?",
-    "description": "Join us and start building your next prototype today.",
-    "buttonText": "Get Started",
-    "buttonHref": "#"
+    "title": "Start your own prototype",
+    "description": "Change the sample content, choose your tokens, and share the result.",
+    "buttonText": "Read the quick start",
+    "buttonHref": "/about/#quick-start"
   }
 }

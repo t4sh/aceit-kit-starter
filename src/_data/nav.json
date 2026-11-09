@@ -1,6 +1,7 @@
 {
   "items": [
     { "label": "Home", "url": "/" },
-    { "label": "About", "url": "/about/" }
+    { "label": "Sections", "url": "/sections/" },
+    { "label": "Quick start", "url": "/about/" }
   ]
 }

@@ -6,15 +6,27 @@
     "hash": "bbb38a9c4ae0396050439ed5bf22afd46312100567e8716bf53ff74290bd1d36"
   },
   "/about": {
-    "title": "About",
-    "description": "About this project — atari-kit-starter scaffold.",
+    "title": "Quick start",
+    "description": "Run Aceit Kit Starter, make your first edit, and export a prototype as static HTML.",
     "file": "src/assets/images/og/about.png",
-    "hash": "3d8d520a9bd9a090427a3607b137234d7af0fdd2e548f5c3ad43bac2dbf1c532"
+    "hash": "82558607cdc034918a93026a14239c80be16f3837e468b35554e6a12b347b658"
+  },
+  "/examples/fieldnotes": {
+    "title": "Fieldnotes",
+    "description": "A one-page walking guide built from reusable Aceit Kit sections, with two live token treatments.",
+    "file": "src/assets/images/og/examples/fieldnotes.png",
+    "hash": "636388b9ceacada5ac552e14b63adad2162d4a989a10120fe89f8e0fcf2d29c9"
   },
   "/": {
-    "title": "Home",
-    "description": "Build polished static prototypes with Eleventy, Nunjucks, Tailwind, and vanilla JavaScript.",
+    "title": "Eleventy Prototype Starter",
+    "description": "Build HTML prototypes with Eleventy, Tailwind CSS v4, and reusable Nunjucks sections. Share a standalone HTML file.",
     "file": "src/assets/images/og/index.png",
-    "hash": "64aa2b4c5db0691ab0dce7d85bb3dcb429548efaa0f68c112c5e7ad71e6b4b79"
+    "hash": "3127f72260b8bcd4f2369e645166fbc5db14b7d8636059028a730e8cbf649668"
+  },
+  "/sections": {
+    "title": "Section library",
+    "description": "Browse the Aceit Kit Starter sections, see their source files, and try the Fieldnotes example.",
+    "file": "src/assets/images/og/sections.png",
+    "hash": "62faa6556c96096c0bc1a6c355c275c13f8ba05bf8000fc1fcc493ddfb6e8acd"
   }
 }

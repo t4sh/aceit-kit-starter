@@ -1,22 +1,42 @@
 ---
 layout: layouts/page.njk
-title: About
-description: About this project — atari-kit-starter scaffold.
+title: Quick start
+description: Run Aceit Kit Starter, make your first edit, and export a prototype as static HTML.
 ---
 
 {% from "macros/section.njk" import renderSection with context %}
 
-<section class="section" data-observe="reveal-up" style="background: var(--surface);">
-  <div class="container container--narrow">
-    <h1 style="margin-bottom: var(--space-6);">About this project</h1>
-    <p style="font-size: var(--text-lg); color: var(--on-surface-variant);">
-      This project is built on the atari-kit-starter scaffold — Eleventy v3, Tailwind CSS v4, and
-      vanilla JavaScript with a pluggable design token system.
-    </p>
-    <p style="color: var(--on-surface-variant);">
-      Edit this page at
-      <code>src/pages/about.njk</code>
-      to describe your project.
+<section class="section" id="quick-start">
+  <div class="container container--narrow starter-library">
+    <h1>Start your prototype</h1>
+    <p>Use Node.js 24 or newer, npm, Bash, and Perl. From your copy of the template, run:</p>
+    <pre><code>bash setup.sh "My Project Name"
+npm run dev</code></pre>
+    <ol class="starter-steps">
+      <li>
+        Edit the headline in
+        <code>src/_data/sections.json</code>
+        . Save and check the preview.
+      </li>
+      <li>
+        Change your palette in
+        <code>src/assets/css/tokens.css</code>
+        .
+      </li>
+      <li>
+        Build with
+        <code>npm run build:production</code>
+        , then run
+        <code>npm run build:standalone</code>
+        to get flat HTML in
+        <code>out-standalone/</code>
+        .
+      </li>
+    </ol>
+    <p>
+      The
+      <a href="{{ '/sections/' | site_path }}">section library</a>
+      shows which files to edit and includes a self-contained Fieldnotes download.
     </p>
   </div>
 </section>
@@ -25,8 +45,8 @@ description: About this project — atari-kit-starter scaffold.
   set cta = {
     title: "Ready to build?",
     description: "Start adding pages and sections to bring your prototype to life.",
-    buttonText: "Get Started",
-    buttonHref: "#"
+    buttonText: "Browse sections",
+    buttonHref: "/sections/"
   }
 %}
 {{ renderSection("cta", "", cta) }}

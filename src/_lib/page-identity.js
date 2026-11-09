@@ -16,7 +16,8 @@ function absoluteUrl(baseUrl, value) {
 }
 
 function canonicalUrl(baseUrl, url) {
-  return absoluteUrl(baseUrl, normalizePath(url));
+  const pathname = String(url || '/').split(/[?#]/, 1)[0] || '/';
+  return absoluteUrl(baseUrl, pathname.replace(/\/index\.html$/, '/'));
 }
 
 function ogImagePath(url) {

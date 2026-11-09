@@ -11,7 +11,7 @@
       class="flex items-center gap-2 no-underline"
       style="font-family: var(--font-heading); font-weight: 700; font-size: var(--text-xl); color: var(--on-surface);"
     >
-      <span aria-hidden="true">&#9670;</span>
+      {% icon "layers", "nav-icon" %}
       {{ site.name }}
     </a>
 
@@ -43,8 +43,8 @@
         aria-label="Toggle theme"
         title="Toggle theme"
       >
-        <i data-lucide="sun" class="dark:hidden" style="width:20px;height:20px;"></i>
-        <i data-lucide="moon" class="hidden dark:block" style="width:20px;height:20px;"></i>
+        {% icon "sun", "nav-icon theme-icon-sun" %}
+        {% icon "moon", "nav-icon theme-icon-moon" %}
       </button>
 
       {# Mobile menu button #}
@@ -55,7 +55,7 @@
         aria-expanded="false"
         aria-controls="mobile-menu"
       >
-        <i data-lucide="menu" style="width:20px;height:20px;"></i>
+        {% icon "menu", "nav-icon" %}
       </button>
     </div>
   </nav>

@@ -1,0 +1,61 @@
+---
+layout: layouts/base.njk
+title: Fieldnotes
+description: A one-page walking guide built from reusable Aceit Kit sections, with two live token treatments.
+portableExample: true
+hero:
+  title: Take the long way.
+  subtitle: Three short walks for noticing more of the city you already know. Pick a route, pack light, and leave room for a detour.
+  visual: examples/fieldnotes-map.njk
+  actions:
+    - label: Pick a walk
+      href: '#routes'
+      size: lg
+routes:
+  id: routes
+  title: Three ways to wander
+  description: Use the prompts with any nearby park, high street, or waterway.
+  items:
+    - title: The quiet loop
+      description: Circle a park and pause at each change in sound. Take one note before you turn for home.
+      detail: 20–30 min
+    - title: The shopfront walk
+      description: Follow one street and look above eye level. Find a sign, a window, and a detail you’ve never noticed.
+      detail: 30–45 min
+    - title: The waterside detour
+      description: Follow the water until the path changes. Pick a spot to sit and watch what passes.
+      detail: 45–60 min
+cta:
+  title: Make a little time outside
+  description: Bring water, something to write on, and a route you can shorten if you need to.
+  buttonText: Choose a walk
+  buttonHref: '#routes'
+---
+
+{% from "macros/section.njk" import renderSection with context %}
+
+<main id="main-content">
+  <div class="fieldnotes">
+    <header class="container fieldnotes-header">
+      <a class="fieldnotes-brand" href="#intro">Fieldnotes</a>
+      <fieldset class="fieldnotes-styles">
+        <legend>Appearance</legend>
+        <label>
+          <input type="radio" name="fieldnotes-style" id="style-paper" checked />
+          Paper
+        </label>
+        <label>
+          <input type="radio" name="fieldnotes-style" id="style-ink" />
+          Ink
+        </label>
+      </fieldset>
+    </header>
+    {{ renderSection("hero", "02", hero) }}
+    {{ renderSection("features", "01", routes) }}
+    <div id="pack">{{ renderSection("cta", "", cta) }}</div>
+    <footer class="container fieldnotes-footer">
+      <p>Fieldnotes is an Aceit Kit example.</p>
+      <a href="#intro">Back to the introduction</a>
+    </footer>
+  </div>
+</main>
