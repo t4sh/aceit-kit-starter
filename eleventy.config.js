@@ -33,6 +33,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ 'src/assets/images': 'assets/images' });
   eleventyConfig.addPassthroughCopy({
     'node_modules/@hugeicons/core-free-icons/LICENSE.md': 'assets/licenses/hugeicons-MIT.txt',
+    'node_modules/@fontsource-variable/inter/files/inter-latin-standard-normal.woff2':
+      'assets/fonts/inter-latin-variable.woff2',
+    'node_modules/@fontsource-variable/inter/LICENSE': 'assets/licenses/inter-OFL.txt',
   });
   eleventyConfig.on('eleventy.after', async ({ directories, results }) => {
     const example = results.find(({ url }) => url === '/examples/fieldnotes/');

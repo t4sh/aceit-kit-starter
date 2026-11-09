@@ -7,10 +7,9 @@
       {
         "label": "Open the example",
         "variant": "primary",
-        "size": "lg",
         "href": "/examples/fieldnotes/"
       },
-      { "label": "Browse sections", "variant": "outline", "size": "lg", "href": "/sections/" }
+      { "label": "Browse sections", "variant": "link", "href": "/sections/" }
     ]
   },
   "cta": {

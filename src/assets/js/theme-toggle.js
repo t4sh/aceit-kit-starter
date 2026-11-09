@@ -12,8 +12,8 @@
   'use strict';
 
   const STORAGE_KEY = 'theme-preference';
-  const META_LIGHT = 'oklch(0.985 0 0)';
-  const META_DARK = 'oklch(0.15 0 0)';
+  const META_LIGHT = 'oklch(0.995 0.001 85)';
+  const META_DARK = 'oklch(0.265 0.005 75)';
 
   const motionQuery = window.matchMedia('(prefers-color-scheme: dark)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');

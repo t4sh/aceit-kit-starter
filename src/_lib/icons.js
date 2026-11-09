@@ -34,7 +34,7 @@ function icon(name, className = '') {
 
 function faviconDataUrl() {
   const mark = icon('layers').replace('<svg ', '<svg x="5" y="5" width="22" height="22" ');
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" color="#fff"><rect width="32" height="32" rx="7" fill="#1b4779"/>${mark}</svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" color="#25201b"><rect width="32" height="32" rx="7" fill="#ed9d4a"/>${mark}</svg>`;
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 

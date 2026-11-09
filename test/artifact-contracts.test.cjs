@@ -16,7 +16,7 @@ function run(command, args, options = {}) {
 }
 
 test('indexable build emits metadata, crawler files, and build identity', () => {
-  run('npm', ['run', 'build']);
+  run('npm', ['run', 'build:production']);
   run('npm', ['run', 'verify:build']);
 
   const home = readFileSync('out/index.html', 'utf8');
@@ -27,6 +27,13 @@ test('indexable build emits metadata, crawler files, and build identity', () => 
   assert.match(home, /<meta name="twitter:card" content="summary_large_image"/);
   assert.match(home, /<script type="application\/ld\+json">/);
   assert.match(home, /<meta name="site-build-id" content="artifact-contract"/);
+  assert.match(home, /--font-heading: var\(--font-sans\)/);
+  assert.match(home, /\/starter\/assets\/fonts\/inter-latin-variable\.woff2/);
+  assert.equal(
+    readFileSync('out/assets/fonts/inter-latin-variable.woff2').subarray(0, 4).toString(),
+    'wOF2'
+  );
+  assert.match(readFileSync('out/assets/licenses/inter-OFL.txt', 'utf8'), /SIL Open Font License/i);
   assert.match(robots, /Allow: \/\nSitemap: https:\/\/example\.com\/starter\/sitemap\.xml/);
   assert.match(sitemap, /<loc>https:\/\/example\.com\/starter\/about\/<\/loc>/);
   assert.match(sitemap, /<loc>https:\/\/example\.com\/starter\/examples\/fieldnotes\/<\/loc>/);
@@ -45,6 +52,7 @@ test('the prefixed demo links to a self-contained HTML download', () => {
   assert.match(download, /<h1>Take the long way\.<\/h1>/);
   assert.match(download, /\.fieldnotes:has\(#style-ink:checked\)/);
   assert.doesNotMatch(download, /<link[^>]+rel="stylesheet"|<script[^>]+src=/i);
+  assert.doesNotMatch(download, /inter-latin-variable\.woff2/);
   assert.match(home, /<svg class="hugeicon nav-icon theme-icon-sun"[^>]*aria-hidden="true"/);
   assert.doesNotMatch(home, /data-lucide|unpkg\.com/);
   const favicon = /<link rel="icon" href="data:image\/svg\+xml,([^"]+)"/;

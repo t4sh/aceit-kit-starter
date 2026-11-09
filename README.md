@@ -34,7 +34,7 @@ npm run build:production
 npm run build:standalone
 ```
 
-The static site is in `out/` and the flat HTML export is in `out-standalone/`. For a single-page prototype with hash navigation, run `npm run build:spa` after building and open `out-spa/app.html`. The Fieldnotes download includes its styles and artwork. The starter shell uses CDN fonts and renders Hugeicons as inline SVG at build time.
+The static site is in `out/` and the flat HTML export is in `out-standalone/`. For a single-page prototype with hash navigation, run `npm run build:spa` after building and open `out-spa/app.html`. The Fieldnotes download includes its styles and artwork. The starter shell ships Inter Variable locally and renders Hugeicons as inline SVG at build time.
 
 ## Deploy to GitHub Pages
 
@@ -133,17 +133,17 @@ Register icons in [src/\_lib/icons.js](src/_lib/icons.js) and render them with `
 
 ## Changing the Design System
 
-Edit `src/assets/css/tokens.css` — all components reference tokens via `var()`:
+The starter defaults follow [Aceit Docs’ Warm theme](https://t4sh.github.io/aceit-docs/). Edit the color roles in `src/assets/css/tokens.css` to reskin the shell:
 
 ```css
 :root {
-  --primary: oklch(0.55 0.15 250); /* Change this */
-  --surface: oklch(0.985 0 0); /* And this */
+  --primary: oklch(0.44 0.077 58);
+  --surface: oklch(0.995 0.001 85);
   /* ... */
 }
 ```
 
-Also update `src/_data/theme.json` to map token values to Tailwind `@theme` utilities. The layout renders that manifest into the browser Tailwind block.
+Set font stacks and type sizes in `src/_data/theme.json`. The layout exposes these values as CSS custom properties and as Tailwind theme values in the browser build.
 
 ## Source Reference Workflow
 
@@ -184,4 +184,4 @@ cp -r .agents/skills/* ~/.agents/skills/
 
 ## License
 
-The code in this repository is released under the [MIT License](LICENSE). Fonts and libraries loaded from CDNs keep their own licenses, and your own content and the sites you build from this template are yours.
+The code in this repository is released under the [MIT License](LICENSE). Inter Variable ships with its SIL Open Font License in the built assets. Libraries loaded from CDNs keep their own licenses, and your own content and the sites you build from this template are yours.
