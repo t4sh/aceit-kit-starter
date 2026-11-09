@@ -1,15 +1,40 @@
-# aceit-kit-starter
+# Aceit Kit Starter
 
-A design-system-agnostic HTML prototype scaffold built on **Eleventy v3**, **Tailwind CSS v4**, and **vanilla JavaScript**.
+An Eleventy and Tailwind CSS v4 starter for HTML prototypes, with reusable Nunjucks sections and standalone exports.
 
-## Quick Start
+[Live demo](https://t4sh.github.io/aceit-kit-starter/) · [Use this template](https://github.com/t4sh/aceit-kit-starter/generate) · [Section library](https://t4sh.github.io/aceit-kit-starter/sections/) · [Fieldnotes example](https://t4sh.github.io/aceit-kit-starter/examples/fieldnotes/)
+
+![The Fieldnotes example in Paper and Ink, with the same layout and artwork](docs/fieldnotes-preview.webp)
+
+## Quick start
+
+Requires Node.js 24 or newer, npm, Bash, and Perl.
 
 ```bash
 bash setup.sh "My Project Name"
 npm run dev
 ```
 
-Open [localhost:3000](http://localhost:3000) to see your project.
+Open the address Eleventy prints. Change the hero title in [sections.json](src/_data/sections.json), save, and watch the preview reload. Then change your palette in [tokens.css](src/assets/css/tokens.css).
+
+```text
+src/
+├── pages/               Routes and example content
+├── _data/               Site settings, navigation, and section defaults
+├── _includes/sections/  Reusable Nunjucks sections
+└── assets/css/          Design tokens, styles, and utilities
+```
+
+## Try or export a prototype
+
+[Fieldnotes](https://t4sh.github.io/aceit-kit-starter/examples/fieldnotes/) combines a hero, feature list, and call to action. Paper and Ink change the same page's tokens. Use **Download HTML** in the [section library](https://t4sh.github.io/aceit-kit-starter/sections/) to save the example and open it offline.
+
+```bash
+npm run build:production
+npm run build:standalone
+```
+
+The static site is in `out/` and the flat HTML export is in `out-standalone/`. For a single-page prototype with hash navigation, run `npm run build:spa` after building and open `out-spa/app.html`. The Fieldnotes download includes its styles and artwork. The starter shell uses CDN fonts and renders Hugeicons as inline SVG at build time.
 
 ## Deploy to GitHub Pages
 
@@ -39,16 +64,18 @@ network requests itself; a project-specific integration can listen for
 
 ```bash
 npm run verify          # content, design, production build, artifact checks, tests
-npm run check:a11y      # home/about/404 × desktop/mobile/reduced-motion
+npm run check:a11y      # public pages × desktop/mobile/reduced-motion
 npm run check:visual    # four lightweight screenshot comparisons
 npm run og:generate     # deterministic 1200×630 per-route PNG images
 npm run check:og-images # verify manifest, image format, and rendered references
 ```
 
 The production build compiles Tailwind locally. Regular `npm run dev` retains the browser
-Tailwind mode for fast prototyping. The visual CI workflow captures the base and candidate
-on the same Ubuntu runner, avoiding cross-platform baseline drift. Local convenience
-baselines can be refreshed with `npm run check:visual -- --update`.
+Tailwind mode for fast prototyping. Visual CI compares both revisions on the same Ubuntu runner.
+For an intentional visual change, review the comparison artifact and update the affected images
+in `visual/ci-baselines/` from its `current/` folder. CI compares those routes with the updated
+images and still compares other routes with the base revision. Refresh local screenshots with
+`npm run check:visual -- --update`.
 
 ## What You Get
 
@@ -101,6 +128,8 @@ Use in pages via the section authoring module:
 ```
 
 Default variants and content live in `src/_data/sections.json`.
+
+Register icons in [src/\_lib/icons.js](src/_lib/icons.js) and render them with `{% icon "layers" %}`. The site mark and embedded favicon both use the layers icon.
 
 ## Changing the Design System
 

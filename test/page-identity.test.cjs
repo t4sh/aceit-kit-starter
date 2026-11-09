@@ -7,7 +7,15 @@ test('page identity normalizes clean URLs consistently', () => {
   assert.equal(identity.normalizePath('/about.html#team'), '/about');
   assert.equal(
     identity.canonicalUrl('https://example.com', '/about/'),
-    'https://example.com/about'
+    'https://example.com/about/'
+  );
+  assert.equal(
+    identity.canonicalUrl('https://example.com', '/about/index.html'),
+    'https://example.com/about/'
+  );
+  assert.equal(
+    identity.canonicalUrl('https://example.com', '/404.html'),
+    'https://example.com/404.html'
   );
 });
 

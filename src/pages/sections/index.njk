@@ -1,0 +1,79 @@
+---
+layout: layouts/page.njk
+title: Section library
+description: Browse the Aceit Kit Starter sections, see their source files, and try the Fieldnotes example.
+---
+
+<section class="section">
+  <div class="container container--narrow starter-library">
+    <h1>Section library</h1>
+    <p>
+      Build a page from Nunjucks sections. Open Fieldnotes to see a hero, a list of features, and a
+      call to action working together. Switch between Paper and Ink to see what changes when the
+      same sections use different tokens.
+    </p>
+    <div class="starter-links">
+      <a class="btn btn--primary" href="{{ '/examples/fieldnotes/' | site_path }}">
+        Open Fieldnotes
+      </a>
+      <a
+        class="btn btn--outline"
+        href="{{ '/assets/downloads/fieldnotes' | site_path }}"
+        download="fieldnotes.html"
+      >
+        Download HTML
+      </a>
+    </div>
+    <dl class="section-index">
+      <div>
+        <dt>Navigation and footer</dt>
+        <dd>
+          The chrome on this page comes from
+          <code>sections/nav/nav-01.njk</code>
+          and
+          <code>sections/footer/footer-01.njk</code>
+          . Edit labels and links in
+          <code>src/_data/nav.json</code>
+          .
+        </dd>
+      </div>
+      <div>
+        <dt><a href="{{ '/examples/fieldnotes/#intro' | site_path }}">Hero</a></dt>
+        <dd>
+          The starter uses
+          <code>sections/hero/hero-01.njk</code>
+          with defaults from
+          <code>src/_data/sections.json</code>
+          . Fieldnotes uses
+          <code>hero-02.njk</code>
+          with its own headline, links, and artwork.
+        </dd>
+      </div>
+      <div>
+        <dt><a href="{{ '/examples/fieldnotes/#routes' | site_path }}">Features</a></dt>
+        <dd>
+          <code>sections/features/features-01.njk</code>
+          turns the example’s
+          <code>routes</code>
+          data into a numbered list.
+        </dd>
+      </div>
+      <div>
+        <dt><a href="{{ '/examples/fieldnotes/#pack' | site_path }}">Call to action</a></dt>
+        <dd>
+          <code>sections/cta/cta-01.njk</code>
+          uses a title, description, and button from the page or the section defaults.
+        </dd>
+      </div>
+    </dl>
+    <p>
+      Section files live in
+      <code>src/_includes/</code>
+      . Edit the example’s content in
+      <code>src/pages/examples/fieldnotes/index.njk</code>
+      and its appearance in
+      <code>src/assets/css/tokens.css</code>
+      .
+    </p>
+  </div>
+</section>

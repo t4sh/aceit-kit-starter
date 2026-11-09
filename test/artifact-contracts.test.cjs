@@ -28,7 +28,31 @@ test('indexable build emits metadata, crawler files, and build identity', () => 
   assert.match(home, /<script type="application\/ld\+json">/);
   assert.match(home, /<meta name="site-build-id" content="artifact-contract"/);
   assert.match(robots, /Allow: \/\nSitemap: https:\/\/example\.com\/starter\/sitemap\.xml/);
-  assert.match(sitemap, /<loc>https:\/\/example\.com\/starter\/about<\/loc>/);
+  assert.match(sitemap, /<loc>https:\/\/example\.com\/starter\/about\/<\/loc>/);
+  assert.match(sitemap, /<loc>https:\/\/example\.com\/starter\/examples\/fieldnotes\/<\/loc>/);
+});
+
+test('the prefixed demo links to a self-contained HTML download', () => {
+  run('npm', ['run', 'build']);
+
+  const home = readFileSync('out/index.html', 'utf8');
+  const gallery = readFileSync('out/sections/index.html', 'utf8');
+  const download = readFileSync('out/assets/downloads/fieldnotes', 'utf8');
+  assert.match(
+    gallery,
+    /href="\/starter\/assets\/downloads\/fieldnotes"\s+download="fieldnotes\.html"/
+  );
+  assert.match(download, /<h1>Take the long way\.<\/h1>/);
+  assert.match(download, /\.fieldnotes:has\(#style-ink:checked\)/);
+  assert.doesNotMatch(download, /<link[^>]+rel="stylesheet"|<script[^>]+src=/i);
+  assert.match(home, /<svg class="hugeicon nav-icon theme-icon-sun"[^>]*aria-hidden="true"/);
+  assert.doesNotMatch(home, /data-lucide|unpkg\.com/);
+  const favicon = /<link rel="icon" href="data:image\/svg\+xml,([^"]+)"/;
+  const iconSource = home.match(favicon)?.[1];
+  assert.ok(iconSource);
+  assert.match(decodeURIComponent(iconSource), /<svg[^>]+viewBox="0 0 32 32"[\s\S]*<path /);
+  assert.equal(download.match(favicon)?.[1], iconSource);
+  assert.match(readFileSync('out/assets/licenses/hugeicons-MIT.txt', 'utf8'), /MIT License/i);
 });
 
 test('build verification rejects missing referenced assets', () => {

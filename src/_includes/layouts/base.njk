@@ -17,11 +17,11 @@
     {% if eleventy.env.runMode == "build" %}
       <meta
         http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
       />
     {% endif %}
 
-    <title>{{ title or site.name }}</title>
+    <title>{% if title %}{{ title }} · {% endif %}{{ site.name }}</title>
     <meta name="description" content="{{ description or site.description }}" />
     <meta name="site-build-id" content="{{ build.id }}" />
     <meta name="site-build-sha" content="{{ build.sha }}" />
@@ -49,13 +49,9 @@
       } | jsonScript | safe }}</script>
     {% endif %}
 
-    {# -- Favicon (simple text-based for now) -------------------------------- #}
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%97%86%3C/text%3E%3C/svg%3E"
-      type="image/svg+xml"
-    />
+    <link rel="icon" href="{% faviconDataUrl %}" type="image/svg+xml" />
 
+    {% if not portableExample %}
     {# -- Prevent flash: apply dark class before paint ----------------------- #}
     <script>
       (function () {
@@ -73,11 +69,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <link rel="preconnect" href="https://unpkg.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@200..900&family=Inter+Tight:wght@400;500;600;700;800;900&family=Instrument+Serif&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    {% endif %}
 
     {# -- Tailwind v4 Browser Build ------------------------------------------ #}
     {#
@@ -99,17 +95,17 @@
       Keep light-mode values here; dark-mode overrides live in tokens.css via
       the `html.dark` cascade and apply at runtime.
     #}
-    {% if site.compiledTailwind %}
+    {% if site.compiledTailwind and not portableExample %}
       <link rel="stylesheet" href="{{ '/assets/css/tailwind.css' | site_path }}?v={{ build.id }}" />
     {% else %}
-      <script
+      {% if not portableExample %}<script
         crossorigin="anonymous"
         src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"
-      ></script>
-      <style type="text/tailwindcss">
+      ></script>{% endif %}
+      <style{% if not portableExample %} type="text/tailwindcss"{% endif %}>
       @layer base, components, utilities;
 
-      @theme {
+      {% if portableExample %}:root{% else %}@theme{% endif %} {
         {# Values come from src/_data/theme.json. This keeps the layout as an
            adapter and leaves the token manifest as the authoritative module.
            The `safe` filter is intentional: theme.json is trusted project
@@ -130,16 +126,6 @@
     <link rel="stylesheet" href="{{ '/assets/css/components.css' | site_path }}?v={{ build.id }}" />
     <link rel="stylesheet" href="{{ '/assets/css/utilities.css' | site_path }}?v={{ build.id }}" />
 
-    {# -- Lucide Icons CDN ---------------------------------------------------
-       Pinned major version: bump deliberately. `defer` so it doesn't block
-       <head> parse; deferred scripts execute before DOMContentLoaded, so
-       icons.js (also deferred, at end of <body>) sees `window.lucide`. #}
-    <script
-      defer
-      crossorigin="anonymous"
-      integrity="sha384-T8akqsreXpbv2/2EEJuq+N2Qiy1xZOom6kCvqIeITxBHl6XQ07MMg1wsDCc9tzVp"
-      src="https://unpkg.com/lucide@1.16.0/dist/umd/lucide.js"
-    ></script>
   </head>
 
   <body>
@@ -147,15 +133,16 @@
 
     {{ content | safe }}
 
+    {% if not portableExample %}
     {# -- JS modules (deferred) --------------------------------------------- #}
     <script defer src="{{ '/assets/js/page-lifecycle.js' | site_path }}?v={{ build.id }}"></script>
     <script defer src="{{ '/assets/js/observer.js' | site_path }}?v={{ build.id }}"></script>
     <script defer src="{{ '/assets/js/theme-toggle.js' | site_path }}?v={{ build.id }}"></script>
     <script defer src="{{ '/assets/js/view-transitions.js' | site_path }}?v={{ build.id }}"></script>
-    <script defer src="{{ '/assets/js/icons.js' | site_path }}?v={{ build.id }}"></script>
     <script defer src="{{ '/assets/js/mobile-menu.js' | site_path }}?v={{ build.id }}"></script>
     {% if site.analyticsEnabled %}
       <script defer src="{{ '/assets/js/analytics.js' | site_path }}?v={{ build.id }}"></script>
+    {% endif %}
     {% endif %}
   </body>
 </html>
