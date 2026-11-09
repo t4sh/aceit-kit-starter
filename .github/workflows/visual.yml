@@ -7,6 +7,8 @@ on:
       - 'src/**'
       - 'styles/**'
       - 'scripts/check-visual.mjs'
+      - 'visual/ci-baselines/**'
+      - '.github/workflows/visual.yml'
 
 permissions:
   contents: read
@@ -46,16 +48,31 @@ jobs:
       - name: Build candidate
         run: npm run build
 
+      - name: Select comparison screenshots
+        id: expected
+        run: |
+          cp -R visual/ci-base visual/ci-expected
+          updated=false
+          for screenshot in visual/ci-baselines/*.png; do
+            [ -f "$screenshot" ] || continue
+            if ! cmp -s "$screenshot" ".visual-base/$screenshot"; then
+              cp "$screenshot" "visual/ci-expected/$(basename "$screenshot")"
+              updated=true
+            fi
+          done
+          echo "updated=$updated" >> "$GITHUB_OUTPUT"
+
       - name: Compare candidate
         run: |
-          VISUAL_BASELINE_DIR=visual/ci-base \
+          VISUAL_BASELINE_DIR=visual/ci-expected \
           VISUAL_CURRENT_DIR=visual/current \
           npm run check:visual
 
-      - if: failure()
+      - if: failure() || steps.expected.outputs.updated == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: visual-comparison
           path: |
             visual/ci-base
+            visual/ci-expected
             visual/current

@@ -71,9 +71,11 @@ npm run check:og-images # verify manifest, image format, and rendered references
 ```
 
 The production build compiles Tailwind locally. Regular `npm run dev` retains the browser
-Tailwind mode for fast prototyping. The visual CI workflow captures the base and candidate
-on the same Ubuntu runner, avoiding cross-platform baseline drift. Local convenience
-baselines can be refreshed with `npm run check:visual -- --update`.
+Tailwind mode for fast prototyping. Visual CI compares both revisions on the same Ubuntu runner.
+For an intentional visual change, review the comparison artifact and update the affected images
+in `visual/ci-baselines/` from its `current/` folder. CI compares those routes with the updated
+images and still compares other routes with the base revision. Refresh local screenshots with
+`npm run check:visual -- --update`.
 
 ## What You Get
 
