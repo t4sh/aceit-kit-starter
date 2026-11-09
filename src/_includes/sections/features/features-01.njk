@@ -1,8 +1,15 @@
-<section class="section" id="{{ sectionConfig.id }}">
+<section
+  class="section"
+  id="{{ sectionConfig.id }}"
+  tabindex="-1"
+  aria-labelledby="{{ sectionConfig.id }}-title"
+>
   <div class="container">
-    <h2>{{ sectionConfig.title }}</h2>
-    <p>{{ sectionConfig.description }}</p>
-    <ol class="feature-rows">
+    <div class="feature-rows-intro">
+      <h2 id="{{ sectionConfig.id }}-title">{{ sectionConfig.title }}</h2>
+      <p>{{ sectionConfig.description }}</p>
+    </div>
+    <ol class="feature-rows" role="list">
       {% for item in sectionConfig.items %}
         <li>
           <h3>{{ item.title }}</h3>
@@ -11,5 +18,8 @@
         </li>
       {% endfor %}
     </ol>
+    {% if sectionConfig.visual %}
+      <div class="feature-rows-visual">{% include sectionConfig.visual %}</div>
+    {% endif %}
   </div>
 </section>

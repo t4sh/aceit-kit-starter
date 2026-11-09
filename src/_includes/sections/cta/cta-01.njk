@@ -11,7 +11,7 @@
       {{ ctaConfig.description or ctaDescription }}
     </p>
     <div class="flex-center" style="gap: var(--space-4);">
-      {{ button(ctaConfig.buttonText or ctaButtonText, { variant: "primary", href: ctaConfig.buttonHref or ctaButtonHref or "#" }) }}
+      {{ button(ctaConfig.buttonText or ctaButtonText, { variant: ctaConfig.buttonVariant or "primary", href: ctaConfig.buttonHref or ctaButtonHref or "#" }) }}
     </div>
   </div>
 </section>

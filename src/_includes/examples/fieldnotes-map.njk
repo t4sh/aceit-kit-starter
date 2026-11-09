@@ -1,45 +1,72 @@
-<figure class="fieldnotes-map">
-  <svg
-    viewBox="{{ mapViewBox or '0 0 520 400' }}"
-    role="img"
-    aria-labelledby="fieldnotes-map-title"
-  >
+<figure class="fieldnotes-map" dir="ltr">
+  <svg viewBox="0 10 1080 332" role="img" aria-labelledby="fieldnotes-map-title">
     <title id="fieldnotes-map-title">
-      Illustrated walking route with three stops over contour lines
+      Three schematic walks: around a park, along a high street, and beside a river
     </title>
-    <g class="map-contours" fill="none" stroke="currentColor" stroke-width="1">
-      <path d="M-18 302C54 255 71 241 73 177S111 71 183 87s91 55 157 29S431 17 544 31" />
-      <path d="M-19 325C61 271 91 248 93 178s46-88 95-70 84 61 157 32S443 40 546 53" />
-      <path d="M-20 348c94-61 136-99 137-170s35-65 80-46 82 64 157 31S456 64 544 76" />
-      <path d="M-21 369c92-61 163-111 162-179s22-62 60-39 88 72 159 39S475 86 545 99" />
-      <path d="M-17 390c96-52 191-112 185-193s18-45 54-15 85 67 145 36S484 106 545 125" />
-      <path d="M13 413c99-53 188-111 184-198s21-24 52 2 70 55 126 26 121-111 171-91" />
-      <path d="M59 418c79-42 165-101 167-169s32 8 62 22 69 11 99-5 101-91 152-89" />
-      <path d="M105 418c69-33 136-90 148-138s40 34 104 23 131-101 180-96" />
-      <path d="M157 421c53-37 86-60 114-113s66 44 129 7 86-71 143-82" />
-      <path d="M199 421c40-25 64-56 91-83s50 35 115 0 82-68 137-78" />
-      <path d="M234 422c64-68 77-58 131-52s91-60 177-86" />
-      <path d="M279 421c34-31 68-16 105-32s89-62 159-77" />
+    <defs>
+      <clipPath id="fieldnotes-street-plate">
+        <path d="M360 0h360v352H360z" />
+      </clipPath>
+      <pattern id="fieldnotes-grove" width="26" height="26" patternUnits="userSpaceOnUse">
+        <circle class="map-grove" cx="7" cy="8" r="2.5" />
+        <circle class="map-grove" cx="20" cy="19" r="2.5" />
+      </pattern>
+    </defs>
+
+    <path class="map-park" d="M0 0h360v352H0z" />
+    <path class="map-street" d="M360 0h360v352H360z" />
+    <path class="map-bank" d="M720 0h360v352H720z" />
+
+    {# Park loop. Paths run around and across the grove. #}
+    <path class="map-ground" d="M0 292h360v17H0zM24 0h17v352H24zM314 0h17v352h-17z" />
+    <path class="map-wood" d="M56 40h246v230H56z" />
+    <path fill="url(#fieldnotes-grove)" d="M56 40h246v230H56z" />
+    <path class="map-footpath" d="M88 166h176M172 70v168M96 92l154 128" />
+    <path class="map-route" d="M100 79h156l23 23v119l-24 24H104l-25-25V102z" />
+    <circle class="map-stop" cx="104" cy="245" r="8" />
+
+    {# High street. Smaller shop lots front the route between two cross streets. #}
+    <g clip-path="url(#fieldnotes-street-plate)">
+      <g transform="rotate(-16 540 176)">
+        <path
+          class="map-road"
+          d="M348 53h390v13H348zM348 153h390v46H348zM348 286h390v14H348zM436-30h16v412h-16zM623-30h17v412h-17z"
+        />
+        <path
+          class="map-block"
+          d="M366 74h62v65h-62zM460 74h72v30h-72zM540 74h75v30h-75zM460 112h23v31h-23zM491 112h28v31h-28zM527 112h21v31h-21zM556 112h27v31h-27zM591 112h24v31h-24zM648 74h68v66h-68zM366 213h62v58h-62zM460 209h29v29h-29zM497 209h24v29h-24zM529 209h28v29h-28zM565 209h22v29h-22zM595 209h20v29h-20zM460 247h155v25H460zM649 213h65v60h-65z"
+        />
+        <path
+          class="map-block"
+          d="M370 6h58v37h-58zM460 8h154v35H460zM650 7h68v36h-68zM366 311h62v37h-62zM460 311h155v38H460zM649 311h68v35h-68z"
+        />
+        <path class="map-route" d="M400 175h275" />
+        <circle class="map-stop" cx="400" cy="175" r="8" />
+        <circle class="map-stop" cx="675" cy="175" r="8" />
+      </g>
     </g>
+
+    {# River path. The walking line follows the bank, with a lookout on the bend. #}
     <path
-      class="map-route"
-      d="M87 301c29-47 102-32 123-79s48-74 102-67 88-36 115-67"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="4"
-      stroke-linecap="round"
-      stroke-dasharray="2 9"
+      class="map-water"
+      d="M943 0h115c-2 68-43 126-87 184-35 46-51 100-42 168H813c-10-81 12-149 57-209C912 87 941 46 943 0z"
     />
-    <g class="map-points">
-      <circle cx="87" cy="301" r="8" />
-      <circle cx="210" cy="222" r="8" />
-      <circle cx="427" cy="88" r="8" />
-    </g>
-    <g class="map-labels" font-size="13">
-      <text x="73" y="331">01</text>
-      <text x="182" y="219">02</text>
-      <text x="437" y="76">03</text>
-    </g>
+    <path
+      class="map-footpath"
+      d="M720 87h93l38-30M720 176h66l32-29M720 278h62l-1 51M1001 103l79 32M958 251l122 29"
+    />
+    <path
+      class="map-block"
+      d="M740 29h39v38h-39zM789 28h41v38h-41zM739 103h30v52h-30zM739 194h34v64h-34zM734 298h32v38h-32zM1012 157h40v29h-40zM993 204h55v31h-55zM983 288h69v39h-69z"
+    />
+    <path class="map-route" d="M922 30c-10 44-38 81-72 123-42 53-61 109-57 171" />
+    <circle class="map-stop" cx="922" cy="30" r="8" />
+    <circle class="map-stop" cx="850" cy="153" r="8" />
+    <circle class="map-stop" cx="793" cy="324" r="8" />
   </svg>
-  <figcaption>Route study · Illustrative map</figcaption>
+  <figcaption>
+    <span>Park loop</span>
+    <span>High street</span>
+    <span>River path</span>
+  </figcaption>
 </figure>

@@ -1,9 +1,9 @@
 {% from "macros/button.njk" import button %}
 
-<section class="split-hero" id="intro">
+<section class="split-hero" id="intro" tabindex="-1" aria-labelledby="intro-title">
   <div class="container split-hero-inner">
     <div class="split-hero-copy">
-      <h1>{{ sectionConfig.title }}</h1>
+      <h1 id="intro-title">{{ sectionConfig.title }}</h1>
       <p>{{ sectionConfig.subtitle }}</p>
       {% for action in sectionConfig.actions %}
         {{ button(action.label, action) }}

@@ -62,7 +62,7 @@ test('the public demo links to its repository and a self-contained HTML download
       /href="https:\/\/github\.com\/t4sh\/aceit-kit-starter"[\s\S]*?title="View repository on GitHub"[^>]*>\s*<svg\b/
     );
   }
-  assert.match(download, /<h1>Take the long way\.<\/h1>/);
+  assert.match(download, /<h1[^>]*>Take the long way\.<\/h1>/);
   assert.match(download, /\.fieldnotes:has\(#style-ink:checked\)/);
   assert.doesNotMatch(download, /<link[^>]+rel="stylesheet"|<script[^>]+src=/i);
   assert.doesNotMatch(download, /inter-latin-variable\.woff2/);

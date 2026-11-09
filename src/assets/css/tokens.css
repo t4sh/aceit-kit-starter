@@ -122,21 +122,19 @@ html.dark {
 
 .starter-showcase {
   --surface: var(--surface-dim);
-  --map-accent: var(--primary);
 }
 
 /* Fieldnotes maps both treatments onto the same component roles. */
 .fieldnotes {
-  --surface: oklch(0.97 0.028 92);
-  --surface-container: oklch(0.91 0.038 90);
-  --on-surface: oklch(0.28 0.041 152);
-  --on-surface-variant: oklch(0.39 0.037 151);
-  --primary: oklch(0.38 0.071 153);
-  --on-primary: oklch(0.98 0.02 92);
-  --primary-container: oklch(0.88 0.059 142);
-  --outline: oklch(0.49 0.045 148);
-  --outline-variant: oklch(0.76 0.05 119);
-  --map-accent: oklch(0.51 0.151 43);
+  --surface: oklch(0.978 0.009 153);
+  --surface-container: oklch(0.933 0.018 156);
+  --on-surface: oklch(0.24 0.034 170);
+  --on-surface-variant: oklch(0.41 0.033 167);
+  --primary: oklch(0.39 0.087 169);
+  --on-primary: oklch(0.985 0.012 157);
+  --primary-container: oklch(0.887 0.046 164);
+  --outline: oklch(0.54 0.043 163);
+  --outline-variant: oklch(0.805 0.032 160);
   --font-sans: ui-sans-serif, system-ui, sans-serif;
   --font-heading: Georgia, ui-serif, serif;
 }
@@ -152,6 +150,5 @@ html.dark {
   --primary-container: oklch(0.36 0.048 237);
   --outline: oklch(0.69 0.07 224);
   --outline-variant: oklch(0.43 0.066 233);
-  --map-accent: oklch(0.83 0.127 78);
   --font-heading: ui-sans-serif, sans-serif;
 }

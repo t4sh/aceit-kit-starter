@@ -5,47 +5,48 @@ description: A one-page walking guide built from reusable Aceit Kit sections, wi
 portableExample: true
 hero:
   title: Take the long way.
-  subtitle: Three short walks for noticing more of the city you already know. Pick a route, pack light, and leave room for a detour.
-  visual: examples/fieldnotes-map.njk
+  subtitle: Three ways to explore your neighbourhood on foot. Start at a park, a row of shops, or the nearest river path.
   actions:
     - label: Pick a walk
       href: '#routes'
       size: lg
 routes:
   id: routes
-  title: Three ways to wander
-  description: Use the prompts with any nearby park, high street, or waterway.
+  title: Choose a walk
+  description: Pick a starting point near you, then follow the notes for that walk.
+  visual: examples/fieldnotes-map.njk
   items:
     - title: The quiet loop
-      description: Circle a park and pause at each change in sound. Take one note before you turn for home.
+      description: Start at a park entrance and follow the perimeter. Pause where traffic gives way to birds or footsteps. Take one note before you turn for home.
       detail: 20–30 min
     - title: The shopfront walk
-      description: Follow one street and look above eye level. Find a sign, a window, and a detail you’ve never noticed.
+      description: Walk a stretch of shops between two cross streets. Look above the windows for old signs, carved dates, or traces of what the buildings used to be.
       detail: 30–45 min
     - title: The waterside detour
-      description: Follow the water until the path changes. Pick a spot to sit and watch what passes.
+      description: Follow the bank to the first bend. Stop where you can see both directions, then turn back or cross at a marked bridge.
       detail: 45–60 min
 cta:
-  title: Make a little time outside
-  description: Bring water, something to write on, and a route you can shorten if you need to.
-  buttonText: Choose a walk
+  title: Before you go
+  description: Bring water and something to write on. Pick a turnaround point before setting off, especially if you’re walking after work.
+  buttonText: Back to the walks
   buttonHref: '#routes'
+  buttonVariant: link
 ---
 
 {% from "macros/section.njk" import renderSection with context %}
 {% from "macros/button.njk" import button %}
 
-<main id="main-content">
+<main id="main-content" tabindex="-1">
   <div class="fieldnotes">
     <header class="container fieldnotes-header">
-      <div class="flex-center" style="gap: var(--space-2);">
+      <div class="fieldnotes-masthead">
         <a class="fieldnotes-brand" href="#intro">Fieldnotes</a>
         {% if site.githubUrl %}
           {{ button("View repository on GitHub", { href: site.githubUrl, variant: "ghost", icon: "github", iconOnly: true, attrs: { title: "View repository on GitHub" } }) }}
         {% endif %}
       </div>
       <fieldset class="fieldnotes-styles">
-        <legend>Appearance</legend>
+        <legend class="sr-only">Appearance</legend>
         <label>
           <input type="radio" name="fieldnotes-style" id="style-paper" checked />
           Paper

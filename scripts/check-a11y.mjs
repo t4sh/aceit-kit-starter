@@ -28,7 +28,14 @@ try {
         `${scenario.name} ${route}: ${results.violations.map((item) => item.id).join(', ')}`
       );
       if (route === '/examples/fieldnotes/') {
-        await page.getByRole('radio', { name: 'Ink' }).check();
+        await page.keyboard.press('Tab');
+        assert.equal(await page.locator(':focus').textContent(), 'Skip to content');
+        await page.keyboard.press('Enter');
+        assert.equal(await page.locator(':focus').getAttribute('id'), 'main-content');
+        await page.getByRole('link', { name: 'Pick a walk' }).press('Enter');
+        assert.equal(await page.locator(':focus').getAttribute('id'), 'routes');
+        await page.getByRole('radio', { name: 'Paper' }).press('ArrowRight');
+        assert.ok(await page.getByRole('radio', { name: 'Ink' }).isChecked());
         const ink = await new AxeBuilder({ page }).analyze();
         assert.equal(
           ink.violations.length,
