@@ -27,6 +27,10 @@
     max-width: 768px;
   }
 
+  .container--starter {
+    max-width: 72rem;
+  }
+
   .container--wide {
     max-width: 1536px;
   }

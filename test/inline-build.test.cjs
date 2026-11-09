@@ -18,6 +18,7 @@ test('standalone build flattens page routes and keeps section overrides', () => 
   const about = readFileSync('out-standalone/about.html', 'utf8');
   assert.match(about, /Ready to build\?/);
   assert.doesNotMatch(about, /Ready to get started\?/);
+  assert.match(about, /url\("data:font\/woff2;base64,/);
 });
 
 test('SPA build installs the SPA lifecycle adapter and uses sanitized navigation', () => {
@@ -27,6 +28,7 @@ test('SPA build installs the SPA lifecycle adapter and uses sanitized navigation
   const spa = readFileSync('out-spa/app.html', 'utf8');
   assert.match(spa, /window\.PageLifecycleMode = 'spa'/);
   assert.match(spa, /window\.PageLifecycle/);
+  assert.match(spa, /url\("data:font\/woff2;base64,/);
   assert.match(spa, /main\.innerHTML = sanitize\(tpl\.innerHTML\)/);
   assert.equal((spa.match(/function sanitizeHTML\(html\)/g) || []).length, 1);
 });

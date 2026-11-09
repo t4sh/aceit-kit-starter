@@ -49,9 +49,11 @@
 
   h1 {
     font-size: var(--text-5xl);
+    letter-spacing: -0.035em;
   }
   h2 {
     font-size: var(--text-4xl);
+    letter-spacing: -0.025em;
   }
   h3 {
     font-size: var(--text-3xl);
@@ -78,6 +80,11 @@
 
   a:hover {
     text-decoration: underline;
+  }
+
+  p a {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
   }
 
   code,

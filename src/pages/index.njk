@@ -6,6 +6,7 @@ permalink: /
 ---
 
 {% from "macros/section.njk" import renderSection with context %}
+{% from "macros/button.njk" import button %}
 
 {% if site.templateUrl %}
   {%
@@ -13,16 +14,16 @@ permalink: /
       title: sections.hero.title,
       subtitle: sections.hero.subtitle,
       actions: [
-        { label: "Use this template", variant: "primary", size: "lg", href: site.templateUrl },
-        { label: "Browse sections", variant: "outline", size: "lg", href: "/sections/" }
+        { label: "Use this template", variant: "primary", href: site.templateUrl },
+        { label: "Browse sections", variant: "link", href: "/sections/" }
       ]
     }
   %}
 {% endif %}
-<div class="starter-intro">{{ renderSection("hero", "", intro) }}</div>
+{{ renderSection("hero", "", intro) }}
 
-<section class="section starter-showcase" aria-labelledby="fieldnotes-heading">
-  <div class="container split-hero-inner">
+<section class="starter-showcase" aria-labelledby="fieldnotes-heading">
+  <div class="container container--starter split-hero-inner">
     <div class="split-hero-copy">
       <h2 id="fieldnotes-heading">Fieldnotes</h2>
       <p>
@@ -34,7 +35,7 @@ permalink: /
           Open Fieldnotes
         </a>
         <a
-          class="btn btn--outline"
+          class="btn btn--link"
           href="{{ '/assets/downloads/fieldnotes' | site_path }}"
           download="fieldnotes.html"
         >
@@ -42,8 +43,21 @@ permalink: /
         </a>
       </div>
     </div>
-    <div class="split-hero-visual">{% include "examples/fieldnotes-map.njk" %}</div>
+    <div class="split-hero-visual">
+      {% set mapViewBox = "0 40 520 320" %}
+      {% include "examples/fieldnotes-map.njk" %}
+    </div>
   </div>
 </section>
 
-{{ renderSection("cta") }}
+<section class="starter-next" aria-labelledby="starter-next-heading">
+  <div class="container container--starter">
+    <div>
+      <h2 id="starter-next-heading">{{ sections.cta.title }}</h2>
+      <p>{{ sections.cta.description }}</p>
+    </div>
+    <div class="starter-links">
+      {{ button(sections.cta.buttonText, { variant: "link", href: sections.cta.buttonHref }) }}
+    </div>
+  </div>
+</section>

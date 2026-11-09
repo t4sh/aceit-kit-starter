@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" id="meta-theme-color" content="oklch(0.985 0 0)" />
+    <meta name="theme-color" id="meta-theme-color" content="oklch(0.995 0.001 85)" />
     <meta name="view-transition" content="same-origin" />
 
     {# -- Content Security Policy (build only) ------------------------------
@@ -17,7 +17,7 @@
     {% if eleventy.env.runMode == "build" %}
       <meta
         http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
       />
     {% endif %}
 
@@ -61,55 +61,39 @@
           (p === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
         if (dark) document.documentElement.classList.add('dark');
         var m = document.querySelector('#meta-theme-color');
-        if (m) m.content = dark ? 'oklch(0.15 0 0)' : 'oklch(0.985 0 0)';
+        if (m) m.content = dark ? 'oklch(0.265 0.005 75)' : 'oklch(0.995 0.001 85)';
       })();
     </script>
 
-    {# -- Fonts: preconnect + Google Fonts (Neometric stack) ----------------- #}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Hubot+Sans:wght@200..900&family=Inter+Tight:wght@400;500;600;700;800;900&family=Instrument+Serif&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
     {% endif %}
 
-    {# -- Tailwind v4 Browser Build ------------------------------------------ #}
-    {#
-      Prototype-only CDN waiver: @tailwindcss/browser@4 is intentionally used
-      by this starter for zero-build prototyping. It is major-version pinned,
-      but not byte-stable enough for SRI. For production, replace this with a
-      first-party Tailwind CLI build and remove cdn.jsdelivr.net from CSP.
-
-      IMPORTANT: @theme values are evaluated by the TW4 JIT at parse time,
-      before tokens.css (loaded via <link> below) is available. That means
-      var(--token) refs here CANNOT resolve and will break utility generation
-      for any non-color namespace. Rule of thumb:
-
-        - Fonts, type scale, spacing base, radii, shadows → literal values
-        - Color tokens → var(--token) is fine (Tailwind emits
-          `.bg-primary { background: var(--primary) }`, which resolves at
-          render time, not JIT time)
-
-      Keep light-mode values here; dark-mode overrides live in tokens.css via
-      the `html.dark` cascade and apply at runtime.
-    #}
+    {# The browser build uses Tailwind's CDN for zero-build prototyping. #}
+    {% set browserTailwind = not site.compiledTailwind and not portableExample %}
     {% if site.compiledTailwind and not portableExample %}
       <link rel="stylesheet" href="{{ '/assets/css/tailwind.css' | site_path }}?v={{ build.id }}" />
-    {% else %}
-      {% if not portableExample %}<script
+    {% elif browserTailwind %}
+      <script
         crossorigin="anonymous"
         src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"
-      ></script>{% endif %}
-      <style{% if not portableExample %} type="text/tailwindcss"{% endif %}>
+      ></script>
+    {% endif %}
+
+    <style{% if browserTailwind %} type="text/tailwindcss"{% endif %}>
       @layer base, components, utilities;
 
-      {% if portableExample %}:root{% else %}@theme{% endif %} {
-        {# Values come from src/_data/theme.json. This keeps the layout as an
-           adapter and leaves the token manifest as the authoritative module.
-           The `safe` filter is intentional: theme.json is trusted project
-           data containing CSS literals, not user/CMS input. #}
+      {% if not portableExample %}
+      @font-face {
+        font-family: "Inter Variable";
+        src: url("{{ '/assets/fonts/inter-latin-variable.woff2' | site_path }}") format("woff2");
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+      }
+      {% endif %}
+
+      {# The manifest contains trusted CSS values. The compiled and portable
+         shells need the same custom properties for their component CSS. #}
+      {% if browserTailwind %}@theme static{% else %}:root{% endif %} {
         {% for section in theme.sections %}
           /* -- {{ section.label }} -- */
           {% for token in section.tokens %}
@@ -117,8 +101,7 @@
           {% endfor %}
         {% endfor %}
       }
-      </style>
-    {% endif %}
+    </style>
 
     {# -- CSS files ---------------------------------------------------------- #}
     <link rel="stylesheet" href="{{ '/assets/css/tokens.css' | site_path }}?v={{ build.id }}" />

@@ -28,15 +28,15 @@ This is a single-context repo: read root `CONTEXT.md` and root `docs/adr/` when 
 
 ## Tech Stack
 
-| Layer   | Technology                                                                              |
-| ------- | --------------------------------------------------------------------------------------- |
-| SSG     | Eleventy v3 + Nunjucks                                                                  |
-| CSS     | Tailwind v4 (browser CDN) + custom @layer (tokens, base, components, utilities)         |
-| JS      | Vanilla ES6 modules — no bundler                                                        |
-| Icons   | Hugeicons, rendered as inline SVG at build time                                         |
-| Fonts   | Google Fonts — Space Grotesk, Inter Tight, Hubot Sans, JetBrains Mono, Instrument Serif |
-| Linting | ESLint, Stylelint, Prettier (with jinja-template plugin)                                |
-| Build   | 11ty → `inline-build.mjs` (standalone + SPA)                                            |
+| Layer   | Technology                                                                      |
+| ------- | ------------------------------------------------------------------------------- |
+| SSG     | Eleventy v3 + Nunjucks                                                          |
+| CSS     | Tailwind v4 (browser CDN) + custom @layer (tokens, base, components, utilities) |
+| JS      | Vanilla ES6 modules — no bundler                                                |
+| Icons   | Hugeicons, rendered as inline SVG at build time                                 |
+| Fonts   | Self-hosted Inter Variable with system sans, serif, and monospace faces         |
+| Linting | ESLint, Stylelint, Prettier (with jinja-template plugin)                        |
+| Build   | 11ty → `inline-build.mjs` (standalone + SPA)                                    |
 
 ## Project Structure
 

@@ -122,6 +122,19 @@
     background: var(--surface-container);
   }
 
+  .btn--link {
+    padding-inline: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .btn--link:hover {
+    text-decoration-thickness: 2px;
+  }
+
   .btn--destructive {
     background: var(--error);
     color: var(--on-error);
@@ -387,8 +400,8 @@
   }
 
   /* -- Starter pages and reusable split sections -------------------------- */
-  .starter-intro .section--lg {
-    padding-block: clamp(var(--space-12), 8vw, var(--space-24));
+  .starter-intro {
+    padding-block: clamp(var(--space-10), 5vw, var(--space-20));
   }
 
   .starter-intro h1,
@@ -396,14 +409,83 @@
     text-wrap: balance;
   }
 
+  .starter-intro h1 {
+    max-width: 24ch;
+    margin-block-end: var(--space-4);
+    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .starter-intro p {
+    max-width: var(--content-measure);
+    margin-block-end: var(--space-5);
+    color: var(--on-surface-variant);
+  }
+
   .starter-links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-3);
+    column-gap: var(--space-5);
+    row-gap: var(--space-2);
   }
 
   .starter-links .btn {
     min-height: var(--space-11);
+  }
+
+  .starter-links .btn--primary {
+    padding-inline: var(--space-4);
+    border-radius: var(--radius-sm);
+    box-shadow: none;
+  }
+
+  .starter-showcase {
+    padding-block: clamp(var(--space-8), 4vw, var(--space-16));
+    border-block: 1px solid var(--outline-variant);
+  }
+
+  .starter-showcase .split-hero-copy h2,
+  .starter-next h2 {
+    margin-block-end: var(--space-2);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+  }
+
+  .starter-showcase .split-hero-copy p {
+    margin-block-end: var(--space-4);
+    font-size: var(--text-base);
+  }
+
+  .starter-showcase .fieldnotes-map {
+    border-radius: var(--radius-sm);
+  }
+
+  .starter-showcase .map-route {
+    stroke-width: 2.5;
+    stroke-dasharray: 4 5;
+  }
+
+  .starter-showcase .map-labels {
+    font-size: var(--text-base);
+  }
+
+  .starter-next {
+    padding-block: var(--space-8);
+    background: var(--surface-container);
+  }
+
+  .starter-next .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-8);
+  }
+
+  .starter-next p {
+    margin: 0;
+    color: var(--on-surface-variant);
   }
 
   .starter-library > * + * {
@@ -471,6 +553,7 @@
   .fieldnotes {
     min-height: 100vh;
     color-scheme: light;
+    font-family: var(--font-sans);
   }
 
   .fieldnotes a {

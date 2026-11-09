@@ -296,6 +296,14 @@ function processFile(filePath) {
   let html = disk.readText(filePath);
   const htmlDir = dirname(filePath);
   html = inlineCSS(html, htmlDir);
+  html = html.replace(
+    /url\("((?:\/[^/"?#]+)*\/assets\/fonts\/inter-latin-variable\.woff2)"\)/g,
+    (match, href) => {
+      const dataUri = fileToBase64DataUri(resolveAssetPath(href, htmlDir));
+      if (!dataUri) throw new Error('Missing Inter font for HTML export. Rebuild /out first.');
+      return 'url("' + dataUri + '")';
+    }
+  );
   html = inlineJS(html, htmlDir);
   html = inlineImages(html, htmlDir);
   return html;

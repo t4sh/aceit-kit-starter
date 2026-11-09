@@ -1,13 +1,19 @@
 {
   "sections": [
     {
-      "label": "Fonts (literals matching tokens.css)",
+      "label": "Fonts",
       "tokens": [
-        { "name": "--font-sans", "value": "'Space Grotesk', sans-serif" },
-        { "name": "--font-heading", "value": "'Inter Tight', sans-serif" },
-        { "name": "--font-body", "value": "'Hubot Sans', 'Inter Tight', sans-serif" },
-        { "name": "--font-mono", "value": "'JetBrains Mono', monospace" },
-        { "name": "--font-serif", "value": "'Instrument Serif', Georgia, serif" }
+        {
+          "name": "--font-sans",
+          "value": "'Inter Variable', ui-sans-serif, system-ui, sans-serif"
+        },
+        { "name": "--font-heading", "value": "var(--font-sans)" },
+        { "name": "--font-body", "value": "var(--font-sans)" },
+        {
+          "name": "--font-mono",
+          "value": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        },
+        { "name": "--font-serif", "value": "Georgia, ui-serif, serif" }
       ]
     },
     {
@@ -21,8 +27,8 @@
         { "name": "--text-xl", "value": "1.25rem" },
         { "name": "--text-2xl", "value": "1.5rem" },
         { "name": "--text-3xl", "value": "1.875rem" },
-        { "name": "--text-4xl", "value": "2.25rem" },
-        { "name": "--text-5xl", "value": "3rem" }
+        { "name": "--text-4xl", "value": "2rem" },
+        { "name": "--text-5xl", "value": "2.75rem" }
       ]
     },
     {
