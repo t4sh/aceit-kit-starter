@@ -28,6 +28,7 @@ test('indexable build emits metadata, crawler files, and build identity', () => 
   assert.match(home, /<script type="application\/ld\+json">/);
   assert.match(home, /<meta name="site-build-id" content="artifact-contract"/);
   assert.match(home, /--font-heading: var\(--font-sans\)/);
+  assert.doesNotMatch(home, /View repository on GitHub/);
   assert.match(home, /\/starter\/assets\/fonts\/inter-latin-variable\.woff2/);
   assert.equal(
     readFileSync('out/assets/fonts/inter-latin-variable.woff2').subarray(0, 4).toString(),
@@ -39,16 +40,28 @@ test('indexable build emits metadata, crawler files, and build identity', () => 
   assert.match(sitemap, /<loc>https:\/\/example\.com\/starter\/examples\/fieldnotes\/<\/loc>/);
 });
 
-test('the prefixed demo links to a self-contained HTML download', () => {
-  run('npm', ['run', 'build']);
+test('the public demo links to its repository and a self-contained HTML download', () => {
+  run('npm', ['run', 'build'], {
+    env: {
+      ...env,
+      SITE_BASE_URL: 'https://t4sh.github.io/aceit-kit-starter',
+      ELEVENTY_PATH_PREFIX: '/aceit-kit-starter',
+    },
+  });
 
   const home = readFileSync('out/index.html', 'utf8');
   const gallery = readFileSync('out/sections/index.html', 'utf8');
   const download = readFileSync('out/assets/downloads/fieldnotes', 'utf8');
   assert.match(
     gallery,
-    /href="\/starter\/assets\/downloads\/fieldnotes"\s+download="fieldnotes\.html"/
+    /href="\/aceit-kit-starter\/assets\/downloads\/fieldnotes"\s+download="fieldnotes\.html"/
   );
+  for (const html of [home, gallery, readFileSync('out/examples/fieldnotes/index.html', 'utf8')]) {
+    assert.match(
+      html,
+      /href="https:\/\/github\.com\/t4sh\/aceit-kit-starter"[\s\S]*?title="View repository on GitHub"[^>]*>\s*<svg\b/
+    );
+  }
   assert.match(download, /<h1>Take the long way\.<\/h1>/);
   assert.match(download, /\.fieldnotes:has\(#style-ink:checked\)/);
   assert.doesNotMatch(download, /<link[^>]+rel="stylesheet"|<script[^>]+src=/i);

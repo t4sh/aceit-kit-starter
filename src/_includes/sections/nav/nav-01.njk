@@ -1,4 +1,5 @@
 {# Navigation — Top bar (nav-01) #}
+{% from "macros/button.njk" import button %}
 {%- set here = page.url | normalize_path -%}
 <header
   class="sticky top-0 z-50"
@@ -8,11 +9,11 @@
     {# -- Logo / Brand ----------------------------------------------------- #}
     <a
       href="{{ '/' | site_path | safe_url }}"
-      class="flex items-center gap-2 no-underline"
+      class="flex min-w-0 items-center gap-2 no-underline"
       style="font-family: var(--font-heading); font-weight: 700; font-size: var(--text-xl); color: var(--on-surface);"
     >
-      {% icon "layers", "nav-icon" %}
-      {{ site.name }}
+      {% icon "layers", "nav-icon shrink-0" %}
+      <span class="truncate">{{ site.name }}</span>
     </a>
 
     {# -- Desktop links ---------------------------------------------------- #}
@@ -35,7 +36,10 @@
     </ul>
 
     {# -- Actions ---------------------------------------------------------- #}
-    <div class="flex items-center gap-3">
+    <div class="flex shrink-0 items-center gap-2 sm:gap-3">
+      {% if site.githubUrl %}
+        {{ button("View repository on GitHub", { href: site.githubUrl, variant: "ghost", icon: "github", iconOnly: true, attrs: { title: "View repository on GitHub" } }) }}
+      {% endif %}
       {# Theme toggle #}
       <button
         id="theme-toggle"

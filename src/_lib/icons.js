@@ -1,10 +1,11 @@
+const github = require('@hugeicons/core-free-icons/GithubIcon');
 const layers = require('@hugeicons/core-free-icons/Layers01Icon');
 const menu = require('@hugeicons/core-free-icons/Menu01Icon');
 const moon = require('@hugeicons/core-free-icons/Moon02Icon');
 const sun = require('@hugeicons/core-free-icons/Sun01Icon');
 const trash = require('@hugeicons/core-free-icons/Delete02Icon');
 
-const icons = { layers, menu, moon, sun, 'trash-2': trash };
+const icons = { github, layers, menu, moon, sun, 'trash-2': trash };
 
 function escapeAttribute(value) {
   return String(value)

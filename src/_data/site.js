@@ -1,6 +1,7 @@
 const rawPrefix = process.env.ELEVENTY_PATH_PREFIX || '';
 const pathPrefix = rawPrefix ? `/${rawPrefix.replace(/^\/+|\/+$/g, '')}` : '';
 const defaultBaseUrl = `http://localhost:3000${pathPrefix}`;
+const baseUrl = (process.env.SITE_BASE_URL || defaultBaseUrl).replace(/\/$/, '');
 
 const projectName = '{{PROJECT_NAME}}';
 const isTemplate = projectName === '{{' + 'PROJECT_NAME}}';
@@ -12,7 +13,11 @@ module.exports = {
     'Eleventy and Tailwind CSS v4 starter for HTML prototypes, with reusable sections and standalone exports.',
   templateUrl: isTemplate ? 'https://github.com/t4sh/aceit-kit-starter/generate' : '',
   author: process.env.SITE_AUTHOR || 'TODO: Your name',
-  baseUrl: (process.env.SITE_BASE_URL || defaultBaseUrl).replace(/\/$/, ''),
+  baseUrl,
+  githubUrl:
+    isTemplate && baseUrl === 'https://t4sh.github.io/aceit-kit-starter'
+      ? 'https://github.com/t4sh/aceit-kit-starter'
+      : '',
   pathPrefix,
   environment: process.env.NODE_ENV || 'development',
   indexable: process.env.SITE_INDEXABLE === 'true',

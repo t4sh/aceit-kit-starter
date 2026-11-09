@@ -33,11 +33,17 @@ cta:
 ---
 
 {% from "macros/section.njk" import renderSection with context %}
+{% from "macros/button.njk" import button %}
 
 <main id="main-content">
   <div class="fieldnotes">
     <header class="container fieldnotes-header">
-      <a class="fieldnotes-brand" href="#intro">Fieldnotes</a>
+      <div class="flex-center" style="gap: var(--space-2);">
+        <a class="fieldnotes-brand" href="#intro">Fieldnotes</a>
+        {% if site.githubUrl %}
+          {{ button("View repository on GitHub", { href: site.githubUrl, variant: "ghost", icon: "github", iconOnly: true, attrs: { title: "View repository on GitHub" } }) }}
+        {% endif %}
+      </div>
       <fieldset class="fieldnotes-styles">
         <legend>Appearance</legend>
         <label>
