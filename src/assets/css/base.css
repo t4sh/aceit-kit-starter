@@ -19,9 +19,40 @@
   }
 
   html {
+    color-scheme: light;
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    scrollbar-color: var(--scroll-thumb, var(--scroll-thumb-default)) var(--scroll-track, var(--surface));
+  }
+
+  /* Theme native scrollbars while leaving their behavior to the browser. */
+  html,
+  :where(pre, .overflow-auto, .overflow-x-auto, .overflow-y-auto, .scroll-thin, [data-scroll-surface]) {
+    --scroll-thumb-default: var(--on-surface-variant);
+
+    scrollbar-width: thin;
+  }
+
+  :where(pre, .overflow-auto, .overflow-x-auto, .overflow-y-auto, .scroll-thin, [data-scroll-surface]) {
+    scrollbar-color: var(--scroll-thumb, var(--scroll-thumb-default)) var(--scroll-track, transparent);
+  }
+
+  @media (prefers-contrast: more) {
+    html,
+    :where(pre, .overflow-auto, .overflow-x-auto, .overflow-y-auto, .scroll-thin, [data-scroll-surface]) {
+      --scroll-thumb-default: var(--on-surface);
+
+      scrollbar-width: auto;
+    }
+  }
+
+  @media (forced-colors: active) {
+    html,
+    :where(pre, .overflow-auto, .overflow-x-auto, .overflow-y-auto, .scroll-thin, [data-scroll-surface]) {
+      scrollbar-width: auto;
+      scrollbar-color: auto;
+    }
   }
 
   body {
