@@ -9,6 +9,7 @@ An Eleventy and Tailwind CSS v4 starter for HTML prototypes, with reusable Nunju
 ## Quick start
 
 Requires Node.js 24 or newer, npm, Bash, and Perl.
+Use `nvm install` and `nvm use` to select the version pinned in `.nvmrc`.
 
 ```bash
 bash setup.sh "My Project Name"
