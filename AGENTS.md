@@ -12,6 +12,12 @@
    ```
    Details: https://skills.sh/t4sh/skills4sh/agent-memory
 
+## Hosted previews
+
+Stable demos for `main` · [Cloudflare Pages](https://aceit-kit-starter.pages.dev/) · [GitHub Pages](https://t4sh.github.io/aceit-kit-starter/)
+
+Use the Cloudflare Pages check for branch previews. Vercel is unverified for this starter. Choose the custom domain after the hosting decision.
+
 ## Agent skills
 
 ### Issue tracker

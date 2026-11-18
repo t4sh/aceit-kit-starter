@@ -2,7 +2,7 @@
 
 An Eleventy and Tailwind CSS v4 starter for HTML prototypes, with reusable Nunjucks sections and standalone exports.
 
-[Live demo](https://t4sh.github.io/aceit-kit-starter/) · [Use this template](https://github.com/t4sh/aceit-kit-starter/generate) · [Section library](https://t4sh.github.io/aceit-kit-starter/sections/) · [Fieldnotes example](https://t4sh.github.io/aceit-kit-starter/examples/fieldnotes/)
+[Cloudflare Pages](https://aceit-kit-starter.pages.dev/) · [GitHub Pages](https://t4sh.github.io/aceit-kit-starter/) · [Use this template](https://github.com/t4sh/aceit-kit-starter/generate) · [Section library](https://t4sh.github.io/aceit-kit-starter/sections/) · [Fieldnotes example](https://t4sh.github.io/aceit-kit-starter/examples/fieldnotes/)
 
 ![The Fieldnotes example in Paper and Ink, with the same layout and artwork](docs/fieldnotes-preview.webp)
 
@@ -36,6 +36,10 @@ npm run build:standalone
 ```
 
 The static site is in `out/` and the flat HTML export is in `out-standalone/`. For a single-page prototype with hash navigation, run `npm run build:spa` after building and open `out-spa/app.html`. The Fieldnotes download includes its styles and artwork. The starter shell ships Inter Variable locally and renders Hugeicons as inline SVG at build time.
+
+## Hosted previews
+
+Pushes to `main` update the Cloudflare Pages and GitHub Pages demos linked above. For a branch preview, open the Cloudflare Pages check on the pull request. This repository has no verified Vercel preview.
 
 ## Deploy to GitHub Pages
 
